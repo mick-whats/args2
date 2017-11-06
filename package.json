@@ -14,6 +14,10 @@
   "devDependencies": {
     "chai": "^3.5.0"
   },
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/mick-whats/args2-node"
+  },
   "main": "lib/index.js",
   "license": "MIT",
   "author": "mick-whats"
