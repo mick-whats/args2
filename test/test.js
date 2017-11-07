@@ -11,12 +11,37 @@
   equal = assert.deepEqual;
 
   describe("args2 test", function() {
-    var getArgs;
-    getArgs = function() {
-      return args2.call(getArgs);
-    };
-    return it("basic", function() {
-      var args, function1, obj1;
+    it("with this function", function() {
+      var args, function1, getArgs, obj1;
+      getArgs = function() {
+        return args2.call(getArgs);
+      };
+      obj1 = {
+        name: 'bob',
+        age: 21
+      };
+      function1 = function() {
+        return 999;
+      };
+      args = getArgs([true, false], 1, '2', 3, '4', 5, '6', obj1, function1);
+      equal(args.nums[0], 1);
+      equal(args.nums[1], 3);
+      equal(args.nums[2], 5);
+      equal(args.strs[0], '2');
+      equal(args.strs[1], '4');
+      equal(args.strs[2], '6');
+      equal(args.others[0], [true, false]);
+      equal(args.objs[0], {
+        name: 'bob',
+        age: 21
+      });
+      return equal(args.funcs[0](), 999);
+    });
+    return it("with arguments", function() {
+      var args, function1, getArgs, obj1;
+      getArgs = function() {
+        return args2.call(arguments);
+      };
       obj1 = {
         name: 'bob',
         age: 21
@@ -85,7 +110,7 @@
         return done();
       });
     });
-    return it("sample test(Another argsments)", function(done) {
+    return it("sample test(Another arguments)", function(done) {
       return sampleFunction(function(err, res) {
         equal(res, {
           text: 'test2',

@@ -1,6 +1,9 @@
 _ = require 'lodash'
 module.exports = ->
-  args = Array::slice.call(@arguments, 0)
+  if @arguments?
+    args = Array::slice.call(@arguments, 0)
+  else
+    args = Array::slice.call(@, 0)
   res =
     nums: []
     strs: []
