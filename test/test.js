@@ -30,7 +30,7 @@
       equal(args.strs[0], '2');
       equal(args.strs[1], '4');
       equal(args.strs[2], '6');
-      equal(args.others[0], [true, false]);
+      equal(args.arrays[0], [true, false]);
       equal(args.objs[0], {
         name: 'bob',
         age: 21
@@ -56,7 +56,7 @@
       equal(args.strs[0], '2');
       equal(args.strs[1], '4');
       equal(args.strs[2], '6');
-      equal(args.others[0], [true, false]);
+      equal(args.arrays[0], [true, false]);
       equal(args.objs[0], {
         name: 'bob',
         age: 21
