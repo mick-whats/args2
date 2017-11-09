@@ -67,7 +67,7 @@ class Args2
   func: (required,defaultValue)->
     return @get('funcs',required,defaultValue)
   other: (required,defaultValue)->
-    return @get('Other',required,defaultValue)
+    return @get('others',required,defaultValue)
 
   string: Args2::str
   number: Args2::num
