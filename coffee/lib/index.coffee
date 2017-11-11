@@ -77,5 +77,7 @@ class Args2
   function: Args2::func
   callback: Args2::func
 
-
+  @bridge: (args,fn) ->
+    args = Array::slice.call(args, 0)
+    return fn.apply(@,args)
 module.exports = Args2
