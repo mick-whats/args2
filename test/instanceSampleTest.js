@@ -98,10 +98,10 @@
   });
 
   describe("bridge", function() {
-    return it("bridge function", function() {
+    it("bridge function", function() {
       var bridgeFunction, res1, res2;
       bridgeFunction = function() {
-        return args2.bridge(arguments, sampleFunction);
+        return args2.bridge(sampleFunction, arguments);
       };
       res1 = bridgeFunction('test1', 1, 2, function() {
         return 999;
@@ -117,6 +117,23 @@
       equal(res1.bool1, res2.bool1);
       equal(res1.other1, res2.other1);
       return equal(res1.function1(), res2.function1());
+    });
+    return it("bridge function add argument", function() {
+      var baseFunction, bridgeFunction1, bridgeFunction2;
+      baseFunction = function() {
+        var args;
+        args = new args2(arguments);
+        return args.strs.length;
+      };
+      bridgeFunction1 = function() {
+        return args2.bridge(bridgeFunction2, arguments);
+      };
+      bridgeFunction2 = function() {
+        return args2.bridge(baseFunction, arguments, 'test3');
+      };
+      equal(baseFunction('text1', 'text2'), 2);
+      equal(bridgeFunction1('text1', 'text2'), 3);
+      return equal(bridgeFunction2('text1', 'text2'), 3);
     });
   });
 

@@ -64,7 +64,7 @@ describe "alias", ->
 describe "bridge", ->
   it "bridge function", ->
     bridgeFunction = ->
-      return args2.bridge(arguments,sampleFunction)
+      return args2.bridge(sampleFunction,arguments)
     res1 = bridgeFunction('test1',1,2,()->999)
     res2 = sampleFunction('test1',1,2,()->999)
     equal res1.text1,res2.text1
@@ -75,7 +75,17 @@ describe "bridge", ->
     equal res1.bool1,res2.bool1
     equal res1.other1,res2.other1
     equal res1.function1(),res2.function1()
-
+  it "bridge function add argument", ->
+    baseFunction = ->
+      args = new args2(arguments)
+      return args.strs.length
+    bridgeFunction1 = ->
+      return args2.bridge(bridgeFunction2,arguments)
+    bridgeFunction2 = ->
+      return args2.bridge(baseFunction,arguments,'test3')
+    equal baseFunction('text1','text2'),2
+    equal bridgeFunction1('text1','text2'),3
+    equal bridgeFunction2('text1','text2'),3
 # describe "string",->
 #   it "basic", ->
 #     sampleFunction = ->

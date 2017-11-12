@@ -1,6 +1,10 @@
 _ = require 'lodash'
 class Args2
-  # @get:->
+  isArguments = (args)->
+    if toString.call(args) is '[object Arguments]'
+      return true
+    else
+      return false
   constructor:(@args) ->
     if @arguments?
       args = Array::slice.call(@arguments, 0)
@@ -77,7 +81,15 @@ class Args2
   function: Args2::func
   callback: Args2::func
 
-  @bridge: (args,fn) ->
+  ###
+  # argumentsを別のFunctionに丸投げする
+  # @param [Function] 丸投げする先のFunction
+  # @param [Arguments] 必ずargumentsを指定
+  # @option [Argument] 追加する引数があれば指定。可変長引数。
+  # @return [???] 丸投げしたFunctionのvalue
+  ###
+  @bridge: (fn,args,_args...) ->
     args = Array::slice.call(args, 0)
+    args = args.concat(_args) if _args.length
     return fn.apply(@,args)
 module.exports = Args2
