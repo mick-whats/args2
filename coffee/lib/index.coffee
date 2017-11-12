@@ -52,7 +52,10 @@ class Args2
       return argArray.shift()
     else
       if required
-        errMsg = "#{dict[argType]} argument required"
+        if defaultValue
+          errMsg = defaultValue
+        else
+          errMsg = "#{dict[argType]} argument required"
         throw new Error(errMsg)
       else if _.isUndefined(defaultValue)
         return undefined
