@@ -96,12 +96,3 @@ describe "bridge", ->
 #     sampleFunction('hello','world')
 #     # result: hello world
 #     sampleFunction('hello')
-
-  # it "", ->
-  #   sampleFunction = (uri)->
-  #     if typeof uri is 'undefined'
-  #       throw new Error('undefined is not a valid uri or options object.')
-  #
-  #   sampleFunction = ->
-  #     args = new args2()
-  #     uri = args.str(true)

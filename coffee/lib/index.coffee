@@ -1,10 +1,10 @@
 _ = require 'lodash'
 class Args2
-  isArguments = (args)->
-    if toString.call(args) is '[object Arguments]'
-      return true
-    else
-      return false
+  # isArguments = (args)->
+  #   if toString.call(args) is '[object Arguments]'
+  #     return true
+  #   else
+  #     return false
   constructor:(@args) ->
     if @arguments?
       args = Array::slice.call(@arguments, 0)
@@ -38,7 +38,7 @@ class Args2
     _.merge @,res
     return @
 
-  get: (argType,required,defaultValue)->
+  get: (argType,required,defaultValue,last=false)->
     dict =
       strs: 'String'
       nums: 'Number'
@@ -49,7 +49,10 @@ class Args2
       others: 'Other'
     argArray = @[argType]
     if argArray.length
-      return argArray.shift()
+      if last
+        return argArray.pop()
+      else
+        return argArray.shift()
     else
       if required
         if defaultValue
@@ -84,6 +87,28 @@ class Args2
   function: Args2::func
   callback: Args2::func
 
+  rStr: (required,defaultValue)->
+    return @get('strs',required,defaultValue, true)
+  rNum: (required,defaultValue)->
+    return @get('nums',required,defaultValue, true)
+  rObj: (required,defaultValue)->
+    return @get('objs',required,defaultValue, true)
+  rArray: (required,defaultValue)->
+    return @get('arrays',required,defaultValue, true)
+  rBool: (required,defaultValue)->
+    return @get('bools',required,defaultValue, true)
+  rFunc: (required,defaultValue)->
+    return @get('funcs',required,defaultValue, true)
+  rOther: (required,defaultValue)->
+    return @get('others',required,defaultValue, true)
+
+  rString: Args2::rStr
+  rNumber: Args2::rNum
+  rObject: Args2::rObj
+  rArr: Args2::rArray
+  rBoolean: Args2::rBool
+  rFunction: Args2::rFunc
+  rCallback: Args2::rFunc
   ###
   # argumentsを別のFunctionに丸投げする
   # @param [Function] 丸投げする先のFunction
