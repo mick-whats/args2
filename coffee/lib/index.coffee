@@ -12,6 +12,7 @@ class Args2
       args = Array::slice.call(@args, 0)
     else
       args = Array::slice.call(@, 0)
+    @args = args
     res =
       nums: []
       strs: []
@@ -50,9 +51,17 @@ class Args2
     argArray = @[argType]
     if argArray.length
       if last
-        return argArray.pop()
+        ref = argArray.pop()
+        if not _.isUndefined(ref)
+          refIndex = _.findLastIndex @args,(o)-> typeof ref is typeof o
+          @args = _.take(@args,refIndex)
+        return ref
       else
-        return argArray.shift()
+        ref = argArray.shift()
+        if not _.isUndefined(ref)
+          refIndex = _.findIndex @args,(o)-> typeof ref is typeof o
+          @args = _.take(@args,refIndex)#
+        return ref
     else
       if required
         if defaultValue
