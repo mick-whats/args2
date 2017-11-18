@@ -127,7 +127,7 @@ class Args2
   rFunction: Args2::rFunc
   rCallback: Args2::rFunc
 
-  shift: ->
+  shift: (required,defaultValue)->
     if @args?.length
       ref = @args[0]
       switch on
@@ -145,7 +145,19 @@ class Args2
           return @func()
         else
           return @other()
-  pop: ->
+    else
+      if required
+        if defaultValue
+          errMsg = defaultValue
+        else
+          errMsg = "argument is required"
+        throw new Error(errMsg)
+      else if _.isUndefined(defaultValue)
+        return undefined
+      else
+        return defaultValue
+
+  pop: (required,defaultValue)->
     if @args?.length
       ref = _.last(@args)
       switch on
@@ -163,6 +175,17 @@ class Args2
           return @rFunc()
         else
           return @rOther()
+    else
+      if required
+        if defaultValue
+          errMsg = defaultValue
+        else
+          errMsg = "argument is required"
+        throw new Error(errMsg)
+      else if _.isUndefined(defaultValue)
+        return undefined
+      else
+        return defaultValue
   bridge:(fn,_this)->
     _this = _this or {}
     return fn.apply(@,@args)

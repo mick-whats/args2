@@ -214,8 +214,60 @@
         age: 17
       }, [1, 2, 3], ['A', 'B', 'C'], true, false, fn1, fn2, null);
     });
-    it("shift required");
-    return it("pop required");
+    it("shift required", function() {
+      var fn;
+      fn = function() {
+        var args;
+        args = new args2(arguments);
+        args.shift(true);
+      };
+      return assert.throws(fn, /argument is required/);
+    });
+    it("shift required(with custom message)", function() {
+      var fn;
+      fn = function() {
+        var args;
+        args = new args2(arguments);
+        args.shift(true, 'custom error message');
+      };
+      return assert.throws(fn, /custom error message/);
+    });
+    it("shift with default_value", function() {
+      var fn;
+      fn = function() {
+        var args;
+        args = new args2(arguments);
+        return args.shift(false, 'default_value');
+      };
+      return equal(fn(), 'default_value');
+    });
+    it("pop required", function() {
+      var fn;
+      fn = function() {
+        var args;
+        args = new args2(arguments);
+        args.pop(true);
+      };
+      return assert.throws(fn, /argument is required/);
+    });
+    it("pop required(with custom message)", function() {
+      var fn;
+      fn = function() {
+        var args;
+        args = new args2(arguments);
+        args.pop(true, 'custom error message');
+      };
+      return assert.throws(fn, /custom error message/);
+    });
+    return it("pop with default_value", function() {
+      var fn;
+      fn = function() {
+        var args;
+        args = new args2(arguments);
+        return args.pop(false, 'default_value');
+      };
+      return equal(fn(), 'default_value');
+    });
   });
 
   describe("bridge(instance)", function() {

@@ -157,8 +157,41 @@ describe "args.args", ->
       assert.lengthOf args.others,0
     fn('test1','test2',111,222,{name:'sam'},new Foo,{age:17},[1,2,3],['A','B','C'],true,false,fn1,fn2,null)
 
-  it "shift required"
-  it "pop required"
+  it "shift required",->
+    fn = ->
+      args = new args2(arguments)
+      args.shift(true)
+      return
+    assert.throws fn,/argument is required/
+  it "shift required(with custom message)",->
+    fn = ->
+      args = new args2(arguments)
+      args.shift(true,'custom error message')
+      return
+    assert.throws fn,/custom error message/
+  it "shift with default_value",->
+    fn = ->
+      args = new args2(arguments)
+      args.shift(false,'default_value')
+    equal fn(),'default_value'
+  it "pop required",->
+    fn = ->
+      args = new args2(arguments)
+      args.pop(true)
+      return
+    assert.throws fn,/argument is required/
+  it "pop required(with custom message)",->
+    fn = ->
+      args = new args2(arguments)
+      args.pop(true,'custom error message')
+      return
+    assert.throws fn,/custom error message/
+  it "pop with default_value",->
+    fn = ->
+      args = new args2(arguments)
+      args.pop(false,'default_value')
+    equal fn(),'default_value'
+
 
 describe "bridge(instance)", ->
   sum = ->
@@ -190,12 +223,3 @@ describe "bridge(instance)", ->
       omitNumber = args.pop()
       return args.pass(sum)
     equal passFunction2(2,3,4),5
-  # it "bridgeFunction ", ->
-  #   sum2 = ->
-  #     args = new args2(arguments)
-  #     return args.nums.reduce (p,c)-> p + c
-  #   bridgeFunction3 = ->
-  #     args = new args2(arguments)
-  #     omitNumber = args.pop()
-  #     return args.bridge(sum)
-  #   equal bridgeFunction2(2,3,4),5
