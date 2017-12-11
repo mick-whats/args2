@@ -128,7 +128,7 @@ class Args2
   rCallback: Args2::rFunc
 
   shift: (required,defaultValue)->
-    if @args?.length
+    if @args.length
       ref = @args[0]
       switch on
         when _.isString(ref)
@@ -158,7 +158,7 @@ class Args2
         return defaultValue
 
   pop: (required,defaultValue)->
-    if @args?.length
+    if @args.length
       ref = _.last(@args)
       switch on
         when _.isString(ref)

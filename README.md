@@ -180,11 +180,39 @@ There are various alias too
 
 ---
 
-### bridge(fn, arguments [,argument_to_add...])
+### shift
+New in version 1.1.
+
+It is a method similar to `Array.prototype.shift ()`  
+Removes the first element from the array and returns that element.
+```coffee
+fn = ->
+  args = new args2(arguments)
+  text = args.shift()
+  return text
+console.log fn('one','two','three') # one
+```
+
+### pop
+New in version 1.1.
+
+It is a method similar to `Array.prototype.pop ()`  
+Removes the last element from the array and returns that element.
+```coffee
+fn = ->
+  args = new args2(arguments)
+  text = args.pop()
+  return text
+console.log fn('one','two','three') # three
+```
+
+
+### args2.bridge(fn, arguments [,argument_to_add...])
 
 When you are creating classes and functions
 I want to pass the argument as it is to another function
-In that case, please use "bridge".
+In that case, please use "bridge"  
+This is a class method
 
 ```coffee
 {bridge} = require 'args2'
@@ -210,3 +238,46 @@ bridgeFunction3 = ->
   args2.bridge(sum,arguments,10,100,1000)
 console.log  bridgeFunction3(2,3,4)# 1119
 ```
+
+### args2.pass(fn, arguments [,argument_to_add...])
+'pass' is alias for 'bridge'  
+This is a class method
+
+### bridge(fn)
+
+New in version 1.1.
+
+This is the instance version of args2.bridge.
+After manipulating the arguments you can pass it to the next method
+
+```coffee
+fn = ->
+  args = new args2(arguments)
+  args.shift()
+  args.bridge(console.log)
+
+fn('one','two','three') # two three
+```
+
+```coffee
+fn = ->
+  args = new args2(arguments)
+  args.pop()
+  args.bridge(console.log)
+
+fn('one','two','three') # one two
+```
+
+```coffee
+fn = ->
+  args = new args2(arguments)
+  args.str()
+  args.bridge(console.log)
+
+fn({a:'a'},'one',true) # {a:'a'} true
+```
+
+### pass(fn)
+New in version 1.1.
+
+'pass' is alias for 'bridge'  

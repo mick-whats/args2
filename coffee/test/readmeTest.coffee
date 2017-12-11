@@ -60,7 +60,7 @@ describe "get", ->
     equal sampleFunction('hello ','world ','and you'),'hello world and you'
     equal sampleFunction('hello ','world '),'hello world undefined'
     equal sampleFunction('hello '),'hello default_value undefined'
-    assert.throws (()->sampleFunction()),/String argument required/
+    assert.throws sampleFunction,/String argument required/
   it "case 2", ->
     sampleFunction = ->
       args = new args2(arguments)
@@ -96,3 +96,42 @@ describe "bridge", ->
     bridgeFunction3 = ->
       args2.bridge(sum,arguments,10,100,1000)
     equal bridgeFunction3(2,3,4),1119
+
+describe "bridge instance", ->
+  it "shift", ->
+    fn = ->
+      args = new args2(arguments)
+      args.shift()
+      args.bridge (a,b)->
+        equal a,'two'
+        equal b,'three'
+    fn('one','two','three')
+  it "pop", ->
+    fn = ->
+      args = new args2(arguments)
+      args.pop()
+      args.bridge (a,b)->
+        equal a,'one'
+        equal b,'two'
+    fn('one','two','three')
+  it "str", ->
+    fn = ->
+      args = new args2(arguments)
+      args.str()
+      args.pass (a,b)->
+        equal a,{a:'a'}
+        equal b,true
+    equal fn({a:'a'},'one',true)
+describe "shift and pop", ->
+  it "shift", ->
+    fn = ->
+      args = new args2(arguments)
+      text = args.shift()
+      return text
+    equal fn('one','two','three'),'one'
+  it "pop", ->
+    fn = ->
+      args = new args2(arguments)
+      text = args.pop()
+      return text
+    equal fn('one','two','three'),'three'
