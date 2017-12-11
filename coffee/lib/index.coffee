@@ -12,6 +12,7 @@ class Args2
       args = Array::slice.call(@args, 0)
     else
       args = Array::slice.call(@, 0)
+    @args = args
     res =
       nums: []
       strs: []
@@ -38,7 +39,7 @@ class Args2
     _.merge @,res
     return @
 
-  get: (argType,required,defaultValue,last=false)->
+  get: (typingFn,argType,required,defaultValue,last=false)->
     dict =
       strs: 'String'
       nums: 'Number'
@@ -50,9 +51,25 @@ class Args2
     argArray = @[argType]
     if argArray.length
       if last
-        return argArray.pop()
+        ref = argArray.pop()
+        if not _.isUndefined(ref)
+          refIndex = _.findLastIndex @args,(o)->
+            if _.isFunction(typingFn)
+              typingFn(o)
+            else
+              ref is o
+          @args.splice(refIndex,1)
+        return ref
       else
-        return argArray.shift()
+        ref = argArray.shift()
+        if not _.isUndefined(ref)
+          refIndex = _.findIndex @args,(o)->
+            if _.isFunction(typingFn)
+              typingFn(o)
+            else
+              ref is o
+          @args.splice(refIndex,1)
+        return ref
     else
       if required
         if defaultValue
@@ -65,19 +82,19 @@ class Args2
       else
         return defaultValue
   str: (required,defaultValue)->
-    return @get('strs',required,defaultValue)
+    return @get(_.isString,'strs',required,defaultValue)
   num: (required,defaultValue)->
-    return @get('nums',required,defaultValue)
+    return @get(_.isNumber,'nums',required,defaultValue)
   obj: (required,defaultValue)->
-    return @get('objs',required,defaultValue)
+    return @get(_.isPlainObject,'objs',required,defaultValue)
   array: (required,defaultValue)->
-    return @get('arrays',required,defaultValue)
+    return @get(_.isArray,'arrays',required,defaultValue)
   bool: (required,defaultValue)->
-    return @get('bools',required,defaultValue)
+    return @get(_.isBoolean,'bools',required,defaultValue)
   func: (required,defaultValue)->
-    return @get('funcs',required,defaultValue)
+    return @get(_.isFunction,'funcs',required,defaultValue)
   other: (required,defaultValue)->
-    return @get('others',required,defaultValue)
+    return @get(null,'others',required,defaultValue)
 
   string: Args2::str
   number: Args2::num
@@ -88,19 +105,19 @@ class Args2
   callback: Args2::func
 
   rStr: (required,defaultValue)->
-    return @get('strs',required,defaultValue, true)
+    return @get(_.isString,'strs',required,defaultValue, true)
   rNum: (required,defaultValue)->
-    return @get('nums',required,defaultValue, true)
+    return @get(_.isNumber,'nums',required,defaultValue, true)
   rObj: (required,defaultValue)->
-    return @get('objs',required,defaultValue, true)
+    return @get(_.isPlainObject,'objs',required,defaultValue, true)
   rArray: (required,defaultValue)->
-    return @get('arrays',required,defaultValue, true)
+    return @get(_.isArray,'arrays',required,defaultValue, true)
   rBool: (required,defaultValue)->
-    return @get('bools',required,defaultValue, true)
+    return @get(_.isBoolean,'bools',required,defaultValue, true)
   rFunc: (required,defaultValue)->
-    return @get('funcs',required,defaultValue, true)
+    return @get(_.isFunction,'funcs',required,defaultValue, true)
   rOther: (required,defaultValue)->
-    return @get('others',required,defaultValue, true)
+    return @get(null,'others',required,defaultValue, true)
 
   rString: Args2::rStr
   rNumber: Args2::rNum
@@ -109,6 +126,70 @@ class Args2
   rBoolean: Args2::rBool
   rFunction: Args2::rFunc
   rCallback: Args2::rFunc
+
+  shift: (required,defaultValue)->
+    if @args.length
+      ref = @args[0]
+      switch on
+        when _.isString(ref)
+          return @str()
+        when _.isNumber(ref)
+          return @num()
+        when _.isArray(ref)
+          return @arr()
+        when _.isPlainObject(ref)
+          return @obj()
+        when _.isBoolean(ref)
+          return @bool()
+        when _.isFunction(ref)
+          return @func()
+        else
+          return @other()
+    else
+      if required
+        if defaultValue
+          errMsg = defaultValue
+        else
+          errMsg = "argument is required"
+        throw new Error(errMsg)
+      else if _.isUndefined(defaultValue)
+        return undefined
+      else
+        return defaultValue
+
+  pop: (required,defaultValue)->
+    if @args.length
+      ref = _.last(@args)
+      switch on
+        when _.isString(ref)
+          return @rStr()
+        when _.isNumber(ref)
+          return @rNum()
+        when _.isArray(ref)
+          return @rArr()
+        when _.isPlainObject(ref)
+          return @rObj()
+        when _.isBoolean(ref)
+          return @rBool()
+        when _.isFunction(ref)
+          return @rFunc()
+        else
+          return @rOther()
+    else
+      if required
+        if defaultValue
+          errMsg = defaultValue
+        else
+          errMsg = "argument is required"
+        throw new Error(errMsg)
+      else if _.isUndefined(defaultValue)
+        return undefined
+      else
+        return defaultValue
+  bridge:(fn,_this)->
+    _this = _this or {}
+    return fn.apply(@,@args)
+  pass: Args2::bridge
   ###
   # argumentsを別のFunctionに丸投げする
   # @param [Function] 丸投げする先のFunction

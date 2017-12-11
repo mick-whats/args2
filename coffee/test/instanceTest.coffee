@@ -2,6 +2,13 @@ args2 = require '../'
 {assert} = require 'chai'
 _ = require 'lodash'
 equal = assert.deepEqual
+describe "instance test (not arguments)", ->
+  it "args", ->
+    getArgs = ->
+      args = new args2(arguments)
+      assert.lengthOf args.args,0
+    getArgs()
+
 describe "instance test", ->
   it "args", ->
     getArgs = ->
