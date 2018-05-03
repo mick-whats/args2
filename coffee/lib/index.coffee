@@ -127,24 +127,29 @@ class Args2
   rFunction: Args2::rFunc
   rCallback: Args2::rFunc
 
+  choiceInternalFunction = (ref,isShift)->
+    names = switch on
+      when _.isString(ref)
+        ['str','rStr']
+      when _.isNumber(ref)
+        ['num','rNum']
+      when _.isArray(ref)
+        ['arr','rArr']
+      when _.isPlainObject(ref)
+        ['obj','rObj']
+      when _.isBoolean(ref)
+        ['bool','rBool']
+      when _.isFunction(ref)
+        ['func','rFunc']
+      else
+        ['other','rOther']
+    return if isShift then names[0] else names[1]
+
   shift: (required,defaultValue)->
     if @args.length
       ref = @args[0]
-      switch on
-        when _.isString(ref)
-          return @str()
-        when _.isNumber(ref)
-          return @num()
-        when _.isArray(ref)
-          return @arr()
-        when _.isPlainObject(ref)
-          return @obj()
-        when _.isBoolean(ref)
-          return @bool()
-        when _.isFunction(ref)
-          return @func()
-        else
-          return @other()
+      internalFunction = choiceInternalFunction(ref,true)
+      return @[internalFunction]()
     else
       if required
         if defaultValue
@@ -160,21 +165,8 @@ class Args2
   pop: (required,defaultValue)->
     if @args.length
       ref = _.last(@args)
-      switch on
-        when _.isString(ref)
-          return @rStr()
-        when _.isNumber(ref)
-          return @rNum()
-        when _.isArray(ref)
-          return @rArr()
-        when _.isPlainObject(ref)
-          return @rObj()
-        when _.isBoolean(ref)
-          return @rBool()
-        when _.isFunction(ref)
-          return @rFunc()
-        else
-          return @rOther()
+      internalFunction = choiceInternalFunction(ref,false)
+      return @[internalFunction]()
     else
       if required
         if defaultValue
