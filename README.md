@@ -3,7 +3,6 @@
 [![npm version](https://badge.fury.io/js/args2.svg)](https://badge.fury.io/js/args2)
 [![Build Status](https://travis-ci.org/mick-whats/args2-node.svg?branch=master)](https://travis-ci.org/mick-whats/args2-node)
 [![Maintainability](https://api.codeclimate.com/v1/badges/e66b304c8e6bb9a713bb/maintainability)](https://codeclimate.com/github/mick-whats/args2-node/maintainability)
-[![bitHound Code](https://www.bithound.io/github/mick-whats/args2-node/badges/code.svg)](https://www.bithound.io/github/mick-whats/args2-node)
 
 You can easily handle arguments of your own function.
 
