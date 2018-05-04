@@ -193,4 +193,5 @@ class Args2
     args = Array::slice.call(args, 0)
     args = args.concat(_args) if _args.length
     return fn.apply(@,args)
+  @pass: Args2.bridge
 module.exports = Args2
