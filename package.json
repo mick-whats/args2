@@ -22,6 +22,11 @@
     "type": "git",
     "url": "https://github.com/mick-whats/args2-node"
   },
+  "coffeelintConfig": {
+    "max_line_length": {
+      "level": "ignore"
+    }
+  },
   "main": "lib/index.js",
   "license": "MIT",
   "author": "mick-whats"
