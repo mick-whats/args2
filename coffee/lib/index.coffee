@@ -194,4 +194,26 @@ class Args2
     args = args.concat(_args) if _args.length
     return fn.apply(@,args)
   @pass: Args2.bridge
+
+  @assign: (argu, types) ->
+    args = new Args2(argu)
+    res = []
+    types.forEach (type) ->
+      res.push switch type
+        when 'str', 'string'
+          args.str()
+        when 'num', 'number'
+          args.num()
+        when 'obj', 'object'
+          args.obj()
+        when 'arr', 'array'
+          args.arr()
+        when 'bool', 'boolean'
+          args.bool()
+        when 'func', 'function', 'fn'
+          args.func()
+        else
+          args.other()
+    return res
+
 module.exports = Args2
