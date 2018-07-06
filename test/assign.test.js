@@ -132,7 +132,7 @@
         return true;
       });
     });
-    return it('case 10', function() {
+    it('case 10', function() {
       var sampleFn;
       sampleFn = function() {
         var bool1, fn, ref, text1;
@@ -144,6 +144,22 @@
       return sampleFn('a', function() {
         return true;
       });
+    });
+    it('case 11', function() {
+      var sampleFn;
+      sampleFn = function() {
+        var fn, num1, ref, text1;
+        ref = args2.assign(arguments, ['str', 'num', 'fn']), text1 = ref[0], num1 = ref[1], fn = ref[2];
+        equal(text1, 'a');
+        equal(num1, 1);
+        return equal(fn(), true);
+      };
+      sampleFn('a', 1, function() {
+        return true;
+      });
+      return sampleFn(1, (function() {
+        return true;
+      }), 'a');
     });
   });
 

@@ -74,4 +74,12 @@ describe "args2.assign", ->
       equal bool1, undefined
       equal fn(), true
     sampleFn('a', -> true)
-  
+  it 'case 11', ->
+    sampleFn = ->
+      [text1, num1, fn] = args2.assign(arguments, ['str' , 'num', 'fn'])
+      equal text1, 'a'
+      equal num1, 1
+      equal fn(), true
+    sampleFn('a', 1, -> true)
+    sampleFn( 1, (-> true), 'a')
+  return
