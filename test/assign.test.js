@@ -161,6 +161,22 @@
         return true;
       }), 'a');
     });
+    it('case 12', function() {
+      var sampleFn;
+      sampleFn = function() {
+        var delay, fn, params, ref;
+        ref = args2.assign(arguments, ['num', 'fn']), delay = ref[0], fn = ref[1], params = ref[2];
+        equal(delay, 100);
+        equal(fn(), true);
+        return equal(params, ['text1', 'bool1']);
+      };
+      sampleFn(100, (function() {
+        return true;
+      }), 'text1', 'bool1');
+      return sampleFn((function() {
+        return true;
+      }), 100, 'text1', 'bool1');
+    });
   });
 
 }).call(this);

@@ -82,4 +82,12 @@ describe "args2.assign", ->
       equal fn(), true
     sampleFn('a', 1, -> true)
     sampleFn( 1, (-> true), 'a')
+  it 'case 12', ->
+    sampleFn = ->
+      [delay, fn, params] = args2.assign(arguments, ['num', 'fn'])
+      equal delay, 100
+      equal fn(), true
+      equal params, ['text1', 'bool1']
+    sampleFn(100, (-> true), 'text1', 'bool1')
+    sampleFn((-> true), 100, 'text1', 'bool1')
   return
