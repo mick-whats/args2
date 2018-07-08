@@ -5,7 +5,7 @@ class Args2
   #     return true
   #   else
   #     return false
-  constructor:(@args) ->
+  constructor: (@args) ->
     if @arguments?
       args = Array::slice.call(@arguments, 0)
     else if @args
@@ -21,7 +21,7 @@ class Args2
       bools: []
       funcs: []
       others: []
-    args.forEach (item)->
+    args.forEach (item) ->
       if _.isNumber(item)
         res.nums.push(item)
       else if _.isString(item)
@@ -36,10 +36,10 @@ class Args2
         res.funcs.push(item)
       else
         res.others.push(item)
-    _.merge @,res
+    _.merge @, res
     return @
 
-  get: (typingFn,argType,required,defaultValue,last=false)->
+  get: (typingFn, argType, required, defaultValue, last = false) ->
     dict =
       strs: 'String'
       nums: 'Number'
