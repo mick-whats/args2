@@ -215,7 +215,6 @@ class Args2
         else
           args.other()
     res.push(args.args) if args.args.length
-    console.log res
     return res
 
 module.exports = Args2
