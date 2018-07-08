@@ -1,6 +1,6 @@
 {
   "name": "args2",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "You can easily handle arguments of your own function.",
   "scripts": {
     "test": "mocha",
