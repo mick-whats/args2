@@ -4,8 +4,7 @@
   "description": "You can easily handle arguments of your own function.",
   "scripts": {
     "test": "ava",
-    "compile": "coffee -o ./ -cw coffee/",
-    "watch": "npm run compile & nyc ava --watch",
+    "watch": "ava --watch",
     "cover": "nyc ava",
     "report": "nyc report --reporter=html",
     "update:snap": "ava --update-snapshots"
