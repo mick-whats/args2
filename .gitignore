@@ -37,3 +37,4 @@ node_modules
 
 .imdone
 coffeelint.json
+.nyc_output
