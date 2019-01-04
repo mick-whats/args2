@@ -1,93 +1,93 @@
 args2 = require '../'
-{ assert } = require 'chai'
+{test} = require 'ava'
 _ = require 'lodash'
-equal = assert.deepEqual
+# t.deepEqual = assert.deept.deepEqual
 
-describe "args2.assign", ->
-  it 'case 1', ->
-    sampleFn = ->
-      [text1, text2, fn] = args2.assign(arguments, ['str' , 'str', 'fn'])
-      equal text1, 'a'
-      equal text2, 'b'
-      equal fn(), true
-    sampleFn('a', 'b', -> true)
-  it 'case 2', ->
-    sampleFn = ->
-      [text1, text2, fn] = args2.assign(arguments, ['str' , 'str', 'fn'])
-      equal text1, 'a'
-      equal text2, undefined
-      equal fn(), true
-    sampleFn('a', -> true)
-  it 'case 3', ->
-    sampleFn = ->
-      [text1, num1, fn] = args2.assign(arguments, ['str' , 'num', 'fn'])
-      equal text1, 'a'
-      equal num1, 1
-      equal fn(), true
-    sampleFn('a', 1, -> true)
-  it 'case 4', ->
-    sampleFn = ->
-      [text1, num1, fn] = args2.assign(arguments, ['str' , 'num', 'fn'])
-      equal text1, 'a'
-      equal num1, undefined
-      equal fn(), true
-    sampleFn('a', -> true)
-  it 'case 5', ->
-    sampleFn = ->
-      [text1, obj1, fn] = args2.assign(arguments, ['str' , 'obj', 'fn'])
-      equal text1, 'a'
-      equal obj1, { foo: 'bar' }
-      equal fn(), true
-    sampleFn('a', { foo: 'bar' }, -> true)
-  it 'case 6', ->
-    sampleFn = ->
-      [text1, obj1, fn] = args2.assign(arguments, ['str' , 'obj', 'fn'])
-      equal text1, 'a'
-      equal obj1, undefined
-      equal fn(), true
-    sampleFn('a', -> true)
-  it 'case 7', ->
-    sampleFn = ->
-      [text1, arr1, fn] = args2.assign(arguments, ['str' , 'arr', 'fn'])
-      equal text1, 'a'
-      equal arr1, ['x']
-      equal fn(), true
-    sampleFn('a', ['x'], -> true)
-  it 'case 8', ->
-    sampleFn = ->
-      [text1, arr1, fn] = args2.assign(arguments, ['str' , 'arr', 'fn'])
-      equal text1, 'a'
-      equal arr1, undefined
-      equal fn(), true
-    sampleFn('a', -> true)
-  it 'case 9', ->
-    sampleFn = ->
-      [text1, bool1, fn] = args2.assign(arguments, ['str' , 'bool', 'fn'])
-      equal text1, 'a'
-      equal bool1, false
-      equal fn(), true
-    sampleFn('a', false, -> true)
-  it 'case 10', ->
-    sampleFn = ->
-      [text1, bool1, fn] = args2.assign(arguments, ['str' , 'bool', 'fn'])
-      equal text1, 'a'
-      equal bool1, undefined
-      equal fn(), true
-    sampleFn('a', -> true)
-  it 'case 11', ->
-    sampleFn = ->
-      [text1, num1, fn] = args2.assign(arguments, ['str' , 'num', 'fn'])
-      equal text1, 'a'
-      equal num1, 1
-      equal fn(), true
-    sampleFn('a', 1, -> true)
-    sampleFn( 1, (-> true), 'a')
-  it 'case 12', ->
-    sampleFn = ->
-      [delay, fn, params] = args2.assign(arguments, ['num', 'fn'])
-      equal delay, 100
-      equal fn(), true
-      equal params, ['text1', 'bool1']
-    sampleFn(100, (-> true), 'text1', 'bool1')
-    sampleFn((-> true), 100, 'text1', 'bool1')
-  return
+
+test 'case 1', (t)->
+  sampleFn = ->
+    [text1, text2, fn] = args2.assign(arguments, ['str' , 'str', 'fn'])
+    t.deepEqual text1, 'a'
+    t.deepEqual text2, 'b'
+    t.deepEqual fn(), true
+  sampleFn('a', 'b', -> true)
+test 'case 2', (t)->
+  sampleFn = ->
+    [text1, text2, fn] = args2.assign(arguments, ['str' , 'str', 'fn'])
+    t.deepEqual text1, 'a'
+    t.deepEqual text2, undefined
+    t.deepEqual fn(), true
+  sampleFn('a', -> true)
+test 'case 3', (t)->
+  sampleFn = ->
+    [text1, num1, fn] = args2.assign(arguments, ['str' , 'num', 'fn'])
+    t.deepEqual text1, 'a'
+    t.deepEqual num1, 1
+    t.deepEqual fn(), true
+  sampleFn('a', 1, -> true)
+test 'case 4', (t)->
+  sampleFn = ->
+    [text1, num1, fn] = args2.assign(arguments, ['str' , 'num', 'fn'])
+    t.deepEqual text1, 'a'
+    t.deepEqual num1, undefined
+    t.deepEqual fn(), true
+  sampleFn('a', -> true)
+test 'case 5', (t)->
+  sampleFn = ->
+    [text1, obj1, fn] = args2.assign(arguments, ['str' , 'obj', 'fn'])
+    t.deepEqual text1, 'a'
+    t.deepEqual obj1, { foo: 'bar' }
+    t.deepEqual fn(), true
+  sampleFn('a', { foo: 'bar' }, -> true)
+test 'case 6', (t)->
+  sampleFn = ->
+    [text1, obj1, fn] = args2.assign(arguments, ['str' , 'obj', 'fn'])
+    t.deepEqual text1, 'a'
+    t.deepEqual obj1, undefined
+    t.deepEqual fn(), true
+  sampleFn('a', -> true)
+test 'case 7', (t)->
+  sampleFn = ->
+    [text1, arr1, fn] = args2.assign(arguments, ['str' , 'arr', 'fn'])
+    t.deepEqual text1, 'a'
+    t.deepEqual arr1, ['x']
+    t.deepEqual fn(), true
+  sampleFn('a', ['x'], -> true)
+test 'case 8', (t)->
+  sampleFn = ->
+    [text1, arr1, fn] = args2.assign(arguments, ['str' , 'arr', 'fn'])
+    t.deepEqual text1, 'a'
+    t.deepEqual arr1, undefined
+    t.deepEqual fn(), true
+  sampleFn('a', -> true)
+test 'case 9', (t)->
+  sampleFn = ->
+    [text1, bool1, fn] = args2.assign(arguments, ['str' , 'bool', 'fn'])
+    t.deepEqual text1, 'a'
+    t.deepEqual bool1, false
+    t.deepEqual fn(), true
+  sampleFn('a', false, -> true)
+test 'case 10', (t)->
+  sampleFn = ->
+    [text1, bool1, fn] = args2.assign(arguments, ['str' , 'bool', 'fn'])
+    t.deepEqual text1, 'a'
+    t.deepEqual bool1, undefined
+    t.deepEqual fn(), true
+  sampleFn('a', -> true)
+test 'case 11', (t)->
+  sampleFn = ->
+    [text1, num1, fn] = args2.assign(arguments, ['str' , 'num', 'fn'])
+    t.deepEqual text1, 'a'
+    t.deepEqual num1, 1
+    t.deepEqual fn(), true
+  sampleFn('a', 1, -> true)
+  sampleFn( 1, (-> true), 'a')
+test 'case 12', (t)->
+  sampleFn = ->
+    [delay, fn, params] = args2.assign(arguments, ['num', 'fn'])
+    t.deepEqual delay, 100
+    t.deepEqual fn(), true
+    t.deepEqual params, ['text1', 'bool1']
+  sampleFn(100, (-> true), 'text1', 'bool1')
+  sampleFn((-> true), 100, 'text1', 'bool1')
+return
